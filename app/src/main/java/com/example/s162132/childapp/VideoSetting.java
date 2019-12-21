@@ -51,6 +51,9 @@ public class VideoSetting {
             @Override
             public void onCallback(Object o) {
                 System.out.println("called:MediaEventEnum.CLOSE");
+                mediaConnection.close();
+                mediaStream.close();
+                Navigator.terminate();
                 mediaStream = null;
                 Navigator.terminate();
                 unsetMediaCallback();
@@ -68,6 +71,6 @@ public class VideoSetting {
 
     public void unsetMediaCallback() {
         mediaConnection.on(MediaConnection.MediaEventEnum.CLOSE, null);
-
+        mediaConnection.on(MediaConnection.MediaEventEnum.ERROR, null);
     }
 }

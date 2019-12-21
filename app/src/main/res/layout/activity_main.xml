@@ -34,7 +34,8 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            app:bootstrapBrand="info"/>
+            app:bootstrapBrand="info"
+            app:roundedCorners="true" />
 
         <Space
             android:layout_width="wrap_content"
@@ -67,7 +68,8 @@
                 android:id="@+id/WifiButton"
                 app:bootstrapBrand="info"
                 android:layout_alignParentTop="true"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                app:roundedCorners="true"/>
 
             <Space
                 android:layout_width="80dp"
@@ -85,7 +87,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                app:roundedCorners="true"/>
         </LinearLayout>
 
     </RelativeLayout>

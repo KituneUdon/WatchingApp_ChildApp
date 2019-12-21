@@ -21,6 +21,7 @@ public class SkyWayIdSetting {
     private successfulGetPeerIdListener successfulGetPeerIdListener;
 
     public Peer getPeerId(Context context) {
+        System.out.println("called:getPeerId");
         Context con = context;
         pref = con.getSharedPreferences("SkyWayId", Context.MODE_PRIVATE);
         String str = pref.getString("myId", null);

@@ -81,6 +81,7 @@ public class WifiSettingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //listViewをタップしたときの処理
+                //今回はlistViewにチェックボックスの状態が変化するだけ
             }
         });
 

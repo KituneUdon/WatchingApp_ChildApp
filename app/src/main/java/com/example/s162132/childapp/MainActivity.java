@@ -101,8 +101,7 @@ public class MainActivity extends Activity
 
         //https://firespeed.org/diary.php?diary=kenz-1821
         //パーミッションの許可を求める
-        if (ContextCompat.checkSelfPermission(
-                this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             // 許可されている時の処理
         } else {
             //許可されていない時の処理
@@ -255,6 +254,7 @@ public class MainActivity extends Activity
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
+                    //なぜか実行される
                     mainProcessing();
                 } else {
                     Toast.makeText(this, "Bluetoothを許可しないとこのアプリは使用できません", Toast.LENGTH_SHORT).show();
@@ -324,13 +324,6 @@ public class MainActivity extends Activity
     }
 
     public Location getLocation() {
-        //locationRequest = new LocationRequest();
-        //locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-        //locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-        //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        //LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, );
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -372,11 +365,6 @@ public class MainActivity extends Activity
                         }
                     });
                     setDataConnectionCallBack();
-                    /*
-                    if (cantWifiConnectionFlg) {
-                        cantWifiConnectionFlg = false;
-                        wifiConnectionWatcher.sentFlg(DISCONNECT_FROM_WiFi);
-                    }*/
                 }
             }
         });
@@ -504,12 +492,6 @@ public class MainActivity extends Activity
             public void onCallback(Object o) {
                 System.out.println("called:DataEventEnum.CLOSE");
                 //親端末が接続を切断したとき
-                /*
-                if (dataConnection != null) {
-                    dataConnection.close();
-                    dataConnection = null;
-                }*/
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -520,6 +502,7 @@ public class MainActivity extends Activity
         });
     }
 
+    @SuppressWarnings("MissingPermission")
     public void callParent() {
         String s = pref1.getString("Key", "");
 
@@ -567,9 +550,11 @@ public class MainActivity extends Activity
     public void successfulGetPeerId() {
         System.out.println("called:successfulGetPeerId");
         if (!wifiConnectingFlg) {
-            System.out.println("親との接続開始");
-            dataConnection = skyWayIdSetting.connectStart(parentId, peer);
-            calledBroadcastreceiverFlg = true;
+            if (parentId != null) {
+                System.out.println("親との接続開始");
+                dataConnection = skyWayIdSetting.connectStart(parentId, peer);
+                calledBroadcastreceiverFlg = true;
+            }
         }
     }
 
@@ -650,6 +635,7 @@ public class MainActivity extends Activity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        System.out.println("called:onDestroy");
         if (dataConnection != null) {
             dataConnection.close();
         }
